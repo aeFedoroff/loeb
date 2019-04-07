@@ -4,9 +4,46 @@
 --возвращает её неподвижну точку
 --отсюда такая сигнатура функции (a -> a) -> a
 --в качестве аргумента -- функция, в качестве возвращаемого значение -- удинённое значение
+--комбинатор неподвижной точки используется в лямбда-исчислении для ввода рекурсии
+--тк в лямбда исчислении функции ананимные, то формальное введение рекурсивных функций напрямую невозможно
 
 
 fix   :: (a -> a) -> a
 fix f =
   let x = f x
   in x
+
+--альтернативное определение
+
+fixA :: (a -> a) -> a
+fixA f = f (fixA f)
+
+--определение через where
+
+fixW :: (a -> a) -> a
+fixW f = x
+  where x = f x
+
+--через комбинатор неподвижной точки можно определить любую рекурсивную функцию
+--fac :: Integral
+-- fac n = fix t
+--   where t n = case n of
+--                 0 -> 1
+
+fac  :: Integer -> Integer
+fac  = \nat -> case nat of
+                0 -> 1
+                n -> n*fac(n-1)
+
+--определение факториала с накопителем
+facStorager     :: Integer -> Integer -> Integer
+facStorager m 0 = m 
+facStorager m n = facStorager (n-1) (n*m) 
+
+facStoragerL :: Integer -> Integer -> Integer
+facStoragerL = \n m -> case (n,m) of
+                        (0,m) -> m
+                        (n,m) -> facStoragerL (n-1) n*m
+                        
+--facFix = \n -> let f n m = f (n-1) (n*m) in (fix (f 1))  
+
