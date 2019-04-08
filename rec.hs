@@ -41,6 +41,12 @@ instance Recursion Integer where
                  0    -> 0
                  int' -> int' - 1
   toInt int  = int
+
+
+fix::(a -> a) -> a
+fix f = let x = f x in x 
+
+
                  
 --generalRecursionFunction :: (Recursion a,Recursion b,Recursion c) => a -> b -> b -> (b -> b) -> b -> b 
 generalRecursionFunction zeroVal coupFunc arg =
@@ -64,3 +70,5 @@ len_mod zeroVal coupFunc argFunc arg = if ifZero(arg)
 
 len_list = len_mod 0 (+) (((const 1) . head)) 
 map_list f xl = len_mod [] (:) (f . head) xl
+
+--recFunc r = fix 

@@ -16,3 +16,5 @@ fs = [ const 1
      ,succ . (!! 1)
      ,succ . (!! 2)
      ]
+
+loeb fs     
