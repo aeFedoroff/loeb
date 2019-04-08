@@ -10,6 +10,7 @@ class Recursion a where
   prep      :: a -> a
   toInt     :: a -> Integer
 
+
 instance Recursion Nat where
   ifZero arg = case arg of
                  O -> True
@@ -57,6 +58,9 @@ generalRecursionFunction zeroVal coupFunc arg =
 --                             False -> (+) (((const 1) . head) xl) (len (prep xl))
 
 
-len_mod xl zeroVal = if ifZero(xl)
+len_mod zeroVal coupFunc argFunc arg = if ifZero(arg)
                      then zeroVal
-                     else ((+) 1 (len_mod (prep xl) zeroVal))
+                     else (coupFunc (argFunc arg) (len_mod zeroVal coupFunc argFunc (prep arg)))
+
+len_list = len_mod 0 (+) (((const 1) . head)) 
+map_list f xl = len_mod [] (:) (f . head) xl
